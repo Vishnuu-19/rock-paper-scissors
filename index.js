@@ -1,37 +1,43 @@
 console.log("Rock, Paper, Scissors Game");
 
-getComputerChoice = () => {
+function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
     const randomIndex = Math.floor(Math.random() * choices.length);
-    console.log(choices[randomIndex]);
+    return choices[randomIndex];
 }
 
-let userChoice = prompt("Enter rock, paper, or scissors:").toLowerCase();
-// console.log(getComputerChoice());
 let humanScore = 0;
 let computerScore = 0;
 
-const playround = (userChoice, getComputerChoice ) => {
-    if(userChoice === getComputerChoice){
-        console.log("Its a tie!");
-    }
-    if((userChoice==='rock' && getComputerChoice === 'scissors') ||
-       (userChoice==='paper' && getComputerChoice === 'rock') ||
-       (userChoice==='scissors' && getComputerChoice === 'paper')) {
+function playRound(userChoice, computerChoice) {
+    if (userChoice === computerChoice) {
+        console.log("It's a tie!");
+    } else if (
+        (userChoice === 'rock' && computerChoice === 'scissors') ||
+        (userChoice === 'paper' && computerChoice === 'rock') ||
+        (userChoice === 'scissors' && computerChoice === 'paper')
+    ) {
         console.log("You win!");
         humanScore++;
-    }else{
+    } else {
         console.log("You Lose!!");
         computerScore++;
     }
 }
-// while(true){
-    playround(userChoice, getComputerChoice());
-    console.log(`Your score: ${humanScore}, Computer score: ${computerScore}`);
 
-    // console.log("continue? (yes/no)");
-    // if(prompt().toLowerCase() != 'yes'){
-    //     console.log("GameOver!!");
-    //     break;
-    // }
-// }
+while (true) {
+    let userChoice = prompt("Enter rock, paper, or scissors:").toLowerCase();
+    if (!["rock", "paper", "scissors"].includes(userChoice)) {
+        console.log("Invalid input. Please enter rock, paper, or scissors.");
+        continue;
+    }
+    let computerChoice = getComputerChoice();
+    console.log(`Computer chose: ${computerChoice}`);
+    playRound(userChoice, computerChoice);
+    console.log(`Your score: ${humanScore}, Computer score: ${computerScore}`);
+    let continueGame = prompt("Do you want to play again? (yes/no):").toLowerCase();
+    if (continueGame !== 'yes') {
+        console.log("Game Over!!");
+        break;
+    }
+}
